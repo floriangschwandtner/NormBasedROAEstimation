@@ -1,0 +1,144 @@
+\documentclass[a4paper,12pt,chapterprefix=false,twoside,openright]{scrbook}
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage[headings]{fullpage}
+\usepackage{helvet}
+
+
+%Grafikeinbindung
+\usepackage{graphics,xcolor}
+%\usepackage[pdftex]{graphicx,xcolor}
+\graphicspath{{./src/pics/}}
+\usepackage{pgfplots}
+\usepackage{tikz} 
+\usetikzlibrary{plotmarks,shapes,arrows.meta,decorations.markings,patterns,calc}
+
+%Mathematikfunktionen
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathtools}
+
+%Tabellen
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+%Setup a Times New Roman Environment for the Title Page
+\newenvironment{ptm}{\fontfamily{ptm}\fontsize{20}{24}\selectfont}{\par}
+%Used on title page
+\newcolumntype{K}[1]{>{\centering\arraybackslash}b{#1}}
+
+\makeindex
+
+%Headers
+\usepackage{scrlayer-scrpage}
+\pagestyle{headings}
+
+% Include paper
+\usepackage{pdfpages}
+\usepackage{xb}
+  
+%==================================================================
+ %==================================================================
+ % Metadaten der Arbeit
+ %
+ % Titel
+ \newcommand{\ifrtitle}{A Master thesis template with conference paper}
+ % Author
+  \newcommand{\ifrauthor}{Firstname Lastname}
+ % Typ der Arbeit
+   \newcommand{\ifrtype}{Master Thesis}
+ % Betreuer
+  \newcommand{\ifrsupervisor}{Dr. Torbjørn Cunis}
+ %
+ %=================================================================== 
+ %==================================================================
+  
+  
+\usepackage[pdfauthor={\ifrauthor},
+          pdftitle={\ifrtitle},
+          pdfsubject={\ifrtype},
+          pdfkeywords={},
+          pdfproducer={pdflatex},
+          pdfcreator={Latex}]{hyperref}
+  
+
+%Beispieltext
+\usepackage{blindtext}
+
+%%Für Automatische Nomenklatur folgenden Block einkommentierten: UND ZEILE 113
+%Für Hinweise bitte ./src/parts/frontmatter/readme_nomenclature.txt lesen.
+%==================================================================
+%Einheiten
+\usepackage{units}
+%%Nomenklauturpaket
+\usepackage[intoc]{nomencliFR_A4}
+\renewcommand{\nomname}{}
+%Definition der Einheitenspalte
+\newcommand{\nomenunit}[1]{\hskip-0em\parbox{4em}{$\left[ #1 \right]$}}
+
+\makenomenclature
+%%==================================================================
+
+
+\begin{document}
+
+%Frontmatter
+%=============================================================================
+\frontmatter
+
+%Title
+\input{./src/parts/frontmatter/title.tex}
+\cleardoublepage
+
+%Erklärung
+\input{./src/parts/frontmatter/erklaerung.tex}
+\cleardoublepage
+
+%Abstract
+\input{./src/parts/frontmatter/abstract.tex}
+\cleardoublepage
+
+%Inhaltsverzeichnis
+\thispagestyle{empty}
+\tableofcontents
+\cleardoublepage
+
+%Für Automatische Nomenklatur folgenden Zeile einkommentierten:
+\input{src/parts/frontmatter/nomenclature.tex}
+
+
+%Mainmatter
+%=============================================================================
+\mainmatter
+
+\input{./src/parts/mainmatter/01_introduction.tex}
+\input{./src/parts/mainmatter/02_background.tex}
+\input{./src/parts/mainmatter/03_chapter.tex}
+\input{./src/parts/mainmatter/04_main.tex}
+%\input{./src/parts/mainmatter/05_chapter.tex}
+%\input{./src/parts/mainmatter/06_chapter.tex}
+\input{./src/parts/mainmatter/07_conclusions.tex}
+
+%Backmatter
+%=============================================================================
+\backmatter
+
+%Abbildungs- und Tabellenverzeichnis
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+\listoftables
+
+% Bibliographie
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\bibliographystyle{abbrvdin}
+\bibliography{./src/bib/bibfile,./src/bib/IEEEexample}
+
+%Appendix
+%=============================================================================
+\appendix
+
+% first appendix
+\input{./src/parts/appendix/A_appendix.tex}
+
+\end{document}

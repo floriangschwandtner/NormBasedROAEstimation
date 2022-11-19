@@ -1,0 +1,38 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{xb}
+         [2011/09/02 v0.1 eXternal Citations (DPC+EG)]
+\def\externalbibdocument{\@ifnextchar[\XB@{\XB@[]}}
+\def\XB@[#1]#2{{%
+  \makeatletter
+  \def\XB@prefix{#1}%
+  \XB@next#2.aux\relax\\}}
+\def\XB@next#1\relax#2\\{%
+  \edef\XB@list{#2}%
+  \XB@loop{#1}}
+\def\XB@aux{%
+  \ifx\XB@list\@empty\else\expandafter\XB@explist\fi}
+
+\def\XB@explist{\expandafter\XB@next\XB@list\\}
+\def\XB@loop#1{\openin\@inputcheck#1\relax
+  \ifeof\@inputcheck
+    \PackageWarning{xb}{^^JNo file #1^^JLABELS NOT IMPORTED.^^J}%
+    \expandafter\XB@aux
+  \else
+    \PackageInfo{xb}{IMPORTING LABELS FROM #1}%
+    \expandafter\XB@read\fi}
+\def\XB@read{%
+  \read\@inputcheck to\XB@line
+  \expandafter\XB@test\XB@line...\XB@}
+\long\def\XB@test#1#2#3\XB@{%
+\ifx#1\citation
+    \PackageWarning{xb}{Citation #2 found.}%
+    \nocite{#2}%
+  \else\ifx#1\@input
+     \edef\XB@list{\XB@list#2\relax}%
+  \fi\fi
+  \ifeof\@inputcheck\expandafter\XB@aux
+  \else\expandafter\XB@read\fi}
+
+\endinput
+%%
+%% End of file `xb.sty'

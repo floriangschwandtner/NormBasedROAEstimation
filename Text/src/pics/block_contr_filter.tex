@@ -1,0 +1,23 @@
+% !TeX root = ../../Main.tex
+\tikzstyle{block} = [draw, fill=cyan!100, rectangle, 
+    minimum height=10mm, minimum width=20mm]
+\tikzstyle{sum} = [draw, fill=cyan!100, circle, inner sep=1.0mm , node distance=1cm]
+\begin{tikzpicture}[auto, node distance=30mm,>={Latex[length=6pt]}]     
+    \node [name=input] {};
+    \node [sum, right of=input] (sum) {};
+    \node [block, right of=sum,node distance=35mm] (system) {\Large$\boldsymbol{G}$};
+    \node [below of=system,node distance=8mm] (slabel) {plant};
+    \node [below left of=system,node distance=30mm] (controller_ref) {} ;
+    \node [block, right of=controller_ref,node distance=3mm] (controller) {\Large$\boldsymbol{K}$} ;
+    \node [below of=controller,node distance=8mm] (clabel) {controller};
+    \node [right of=system,node distance=40mm] (output) {};      
+    \node [block, right of=controller,node distance=32mm] (filter) {\Large$\boldsymbol{F}$};
+    \node [below of=filter,node distance=8mm] (flabel) {filter};
+
+    \draw [draw,->] (input) -- node {$\boldsymbol w$} (sum);
+    \draw [->] (sum) -- node[pos=0.5] {$\boldsymbol u$} (system);
+    \draw [->] (system) -- node [name=y,pos=0.75] {$\boldsymbol y$}(output);
+    \draw [->] (y) |- (filter);
+    \draw [->] (filter) -- node[pos=0.4] {$\boldsymbol y_{filt}$} (controller);
+    \draw [->] (controller) -| node[pos=0.92] {$-$} node [near end] {$\boldsymbol w_{ctr}$} (sum);
+\end{tikzpicture}
